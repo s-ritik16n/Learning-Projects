@@ -1,0 +1,40 @@
+<head>
+  <link rel="stylesheet" href="css/signup.css"/>
+</head>
+<body>
+<div class="container-fluid form">
+  <form action="/forms/signup" class="" method="POST" id="form">
+    <button type="reset" class="glyphicon glyphicon-refresh" id="glyph"></button>
+
+    <input class="form-control myForm inp" type="text" required id="username" name="username" placeholder="username"/>
+    <input class="form-control myForm inp" type="password" name="password" id="password" required placeholder="password"/>
+
+    <input class="form-control myForm inp" type="password" id="password1" name="password1" required placeholder="confirm password"/>
+    <input class="form-control myForm inp" type="email" id="email" name="email" required placeholder="Email"/>
+
+    <input class="form-control myForm inp" type="text" name="dob" id="dob" placeholder="DOB(YYYY-MM-DD)" required/>
+
+      <div class="myForm"><label class="form-inline" for="sex">Sex</label>
+        <select class="form-control" name="sex" id="sex" style="width:100px;">
+        <option value="m">M</option>
+        <option value="f">F</option>
+        <option value="other">other</option></select></div>
+    <div class="myForm">
+    <div class="radio-inline">
+      <label><input type="radio" name="usertype" value="1">Artist</label>
+    </div>
+    <div class="radio-inline">
+      <label><input type="radio" name="usertype" value="0">Buyer</label>
+    </div>
+  </div>
+    <div><button class="btn btn-default btn-success submit" type="submit" name="submit">SUBMIT</button></div>
+  </form>
+  </div>
+  <div id="msg"></div>
+<script src="js/bootstrap.js"></script>
+<script src="js/signup.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+      <script src="/js/navbar.js"></script>
+<body>
+
+

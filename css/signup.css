@@ -1,0 +1,57 @@
+.myForm{
+  margin-top: 20px;
+  position: relative;
+  top:30px;
+  left: 20%;
+  width: 30%;
+}
+input[type=text]{
+  width: 59%;
+}
+input[type=password]{
+  width: 59%;
+}
+input[type=email]{
+  width: 59%;
+}
+.inp{
+  position: relative;
+  top:30px;
+  left: 20%;
+  width: 60%;
+  overflow: hidden;
+
+}
+.submit{
+  position:relative;
+  top:38px;
+  left:26%;
+  width: 50%;
+  height: 45px;
+  margin-top: 8px;
+}
+.form{
+  border: 2px solid;
+  border-color: #C0C0C0;
+  padding: 2px;
+  width: 35%;
+  position: relative;
+  top:10px;
+}
+#glyph{
+  float:right;
+  margin-right: 35px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  padding: 2px;
+}
+#msg{
+  float: right;
+  margin-right: 20px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: #AF4444;
+  font-weight:580;
+  text-align: right;
+}
