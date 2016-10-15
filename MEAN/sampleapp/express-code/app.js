@@ -7,8 +7,10 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
 var api = require('./routes/api');
-//var authenticate = require('./routes/authenticate');
-
+var authenticate = require('./routes/authenticate')(passport);
+var mongoose = require('mongoose');
+mongoose.connect("mongodb://localhost:27017/chirp-test");
+require("./models/models.js");
 var app = express();
 
 // view engine setup
@@ -29,7 +31,8 @@ var initpassport = require('./passport-init');
 initpassport(passport);
 
 app.use('/api',api);
-//app.use('/auth',authenticate);
+app.use('/auth',authenticate);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
