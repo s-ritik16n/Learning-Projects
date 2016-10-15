@@ -1,0 +1,61 @@
+DOM
+
+document.body.innerHTML = "...";
+document.getElementById('idname');
+document.getElementsByTagName("p");
+document.getElementsByClassName("container");
+
+document.querySelectorAll("p .animal");		//query here is a css query
+document.querySelector("idname");		//query here is a css query {ex."a[href*='dog']" - this will find the link which containes dog}
+
+innerHtML can embody htm content. To simply add text, use textContent.
+
+SAMPLES
+
+var some = document.querySelector("#heading");
+heading.className = "something";
+heading.style.backgroundColor = "black";
+
+var newEl = document.createElement("img");
+newEl.src = "sime url";
+newEl.alt = "photo";
+document.body.appendChild(newEl);
+
+var strongEl = document.createElement("strong");
+var text = document.createTextNode("any text");
+strongEl.appendChild(text);
+document.body.appendChild(strongEl);
+
+https://www.khanacademy.org/computing/computer-programming/html-css-js/html-js-dom-modification/a/summary-dom-modification-techniques
+
+var onCLicking = function(e){
+e.preventDefault();	//prevent the default behavior of browser
+}	 	
+
+
+window.setInterval(callback,millisecondsdelay); 		//repeatedly calls countdown after the specified delay
+window.setTimeOut(callback,millisecondsdelay);			//calls callback only once.
+window.clearTimer(variable which points to window.setIntreval);
+
+https://www.khanacademy.org/computing/computer-programming/html-css-js/using-js-libraries-in-your-webpage/a/where-are-js-libraries-hosted
+
+https://www.khanacademy.org/computing/computer-programming/html-css-js/using-js-libraries-in-your-webpage/a/the-world-of-js-libraries
+
+http://www.smashingapps.com/2012/01/19/15-jquery-calendar-date-picker-plugins.html
+
+
+validator.w3.org
+
+https://www.khanacademy.org/computing/computer-programming/html-css/html-css-further-learning/a/html-css-further-learning-what-to-learn-next
+
+
+
+http://www.teaching-materials.org/htmlcss-1day/html-forms/slides.html#slide1
+
+http://www.opendesigns.org/website-templates/
+
+https://www.khanacademy.org/computing/computer-programming/html-js-jquery/jquery-dom-access/a/review-dom-access-with-jquery
+
+https://www.khanacademy.org/computing/computer-programming/html-js-jquery/jquery-tools-techniques/a/review-jquery-collections-looping
+
+https://www.khanacademy.org/computing/computer-programming/html-js-jquery/jquery-tools-techniques/a/bonus-dig-into-the-jquery-source-code
