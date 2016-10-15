@@ -1,9 +1,12 @@
 .up{
   height: 50%;
   width: 100%;
-  background: #141E30; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #141E30 , #243B55); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #141E30 , #243B55); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+  background: #1D4350; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #1D4350 , #A43931); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #1D4350 , #A43931); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   z-index: 2;
   position: absolute;
   top: 0px;
@@ -22,7 +25,7 @@
 .logocirc{
   width: 150px;
    height: 150px;
-     border: 2px solid grey;
+     border: 2px solid black;
    -moz-border-radius: 80px;
    -webkit-border-radius: 80px;
    border-radius: 80px;
@@ -41,4 +44,10 @@ input[type=password]{
   top: 80%;
   left: 10%;
   width: 80%;
+}
+img{
+  position: relative;
+  top:19%;
+  left: 15%;
+
 }
