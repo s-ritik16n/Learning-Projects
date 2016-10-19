@@ -6,7 +6,7 @@ var session = require('express-session');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '2340532',
+  password : PASSWORD_HERE,
   database : 'dbmsPranav'
 });
 
