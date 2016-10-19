@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Skillrack</title>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/angular-resource.min.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+  <body ng-app="app" ng-controller="student" data-ng-init="load()">
+    <form action="/student" method="post">
+      <label for="code">Code:</label>
+      <textarea type="textarea" rows="20" cols="100" required id="code" name="code" ></textarea><br />
+      <div ng-repeat='t in teachers' >
+        <input type="radio" name="teacher" value="{{t.t_id}}" />{{t.name}}<br />
+      </div>
+      <button type="submit">Submit</button>
+  </form>
+  <a href="/marks" style="float:right">Marks</a>
+    <a href="/logout">Logout</a>
+  </body>
+</html>

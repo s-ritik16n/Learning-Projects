@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="/" />
+    <title>Skillrack</title>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-route.min.js"></script>
+    <script src="/js/angular-resource.min.js"></script>
+    <script src="/js/app.js"></script>
+  </head>
+  <body ng-app="app">
+    <div data-ng-controller="teacher">
+    <div data-ng-init="load()">
+      <div ng-repeat="code in codes" ng-show="codes">
+        <a href ng-click="send(code.id)">{{code.title}}</a>
+    </div>
+  </div>
+  <div ng-model="message">
+    <h4>{{message}}</h4>
+  </div>
+</div>
+    <a href="/logout">Logout</a>
+  </body>
+</html>
