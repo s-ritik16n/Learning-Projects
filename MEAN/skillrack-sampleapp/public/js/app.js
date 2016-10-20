@@ -1,12 +1,36 @@
 'use strict';
 
-//maximus' edits
-
 var app = angular.module('app',['ngRoute','ngResource']).run(function($rootScope){
-  $rootScope.m = {};
+  $rootScope.userid = '';
+  $rootScope.authenticated = false
 });
 
 app.config(function($locationProvider,$routeProvider){
+  $routeProvider.
+  when("/",{
+    templateUrl: 'main.html',
+    controller: 'log'
+  }).
+  when("/signup",{
+    templateUrl: 'signup.html',
+    controller: 'log'
+  }).
+  when('/student',{
+    templateUrl: 'student.html',
+    controller: 'student',
+  }).
+  when('/code',{
+    templateUrl: 'code.html',
+    controller: 'render'
+  }).
+  when('/marks',{
+    templateUrl: 'marks.html',
+    controller : 'student'
+  }).
+  when('/teacher',{
+    templateUrl: 'teacher.html',
+    controller : 'teacher'
+  })
   $locationProvider.html5Mode({
     enabled:true
   })
@@ -42,6 +66,20 @@ app.factory('id', function () {
     }
 });
 
+app.factory('userid',function(){
+  function set(id){
+    localStorage.setItem('userid',id);
+  }
+  function get(){
+    return localStorage.getItem('userid');
+  }
+
+  return{
+    set : set,
+    get : get
+  }
+})
+
 app.controller("student",function($scope,$http,$window){
   $scope.load = function(){
     $http.get('/getteacher').success(function(data){
@@ -51,11 +89,13 @@ app.controller("student",function($scope,$http,$window){
   $scope.marks = function(){
     $http.get('/getmarks').success(function(data){
       $scope.result = data;
+      console.log($scope.result);
     })
   }
 });
 
 app.controller("teacher",function($rootScope,$scope,$http,$window,code,id){
+  console.log($rootScope.id);
   $scope.load = function(){
     $http.get('/getcode').success(function(data){
       if(data.length>0){
@@ -106,9 +146,18 @@ app.controller('render',function($http,$rootScope,$interval,$scope,$timeout,code
       }
     })
   }
+
+  $scope.logout = function(){
+    userid.set("");
+    $rootScope.authenticated = false;
+    console.log(JSON.parse(JSON.stringify(userid.get())));
+    $window.location.href='/'
+  }
+  
 });
 
-app.controller("log",function($scope,$http,$window,$location){
+app.controller("log",function($rootScope,$scope,$http,$window,$location,id,userid){
+  console.log("in log controller");
   $scope.login = function(){
     var data = JSON.stringify({
       check:$scope.check,
@@ -119,17 +168,19 @@ app.controller("log",function($scope,$http,$window,$location){
       console.log("in post");
       console.log(data.exists);
       if(data.exists == true){
+        userid.set(data.id);
+        $rootScope.authenticated = true;
         if(data.user == "s"){
-            $location.path('/student');
-            $window.location.reload();
+          $window.location.href="/student";
         }
         else if(data.user == "t"){
-          $location.path('/teacher');
-          $window.location.reload();
+          $window.location.href="/teacher";
         }
       }
       else {
-        $scope.message="incorrect login details"
+        $rootScope.authenticated=false;
+        $rootScope.id = '';
+        $scope.message="invalid credentials"
       }
       $scope.check = '';
       $scope.id='';
@@ -149,16 +200,18 @@ app.controller("log",function($scope,$http,$window,$location){
       console.log("in post");
       console.log(obj);
       if(obj.exists){
-        $scope.message = "username taken"
+        $scope.message = "username is taken or invalid"
       }
       else{
+        userid.set(obj.id);
+        $rootScope.authenticated = true;
+        console.log($rootScope.id);
+        console.log($rootScope.authenticated);
         if(obj.user == "s"){
-            $location.path('/student');
-            $window.location.reload();
+            $window.location.href = "/student";
         }
         else if(obj.user == "t"){
-          $location.path('/teacher');
-          $window.location.reload();
+          $window.location.href = '/teacher';
         }
       }
     })
@@ -166,4 +219,22 @@ app.controller("log",function($scope,$http,$window,$location){
       $scope.message = 'error'
     })
   }
-})
+
+  $scope.load=function(){
+    $scope.userid = JSON.parse(JSON.stringify(userid.get()));
+    console.log(typeof $scope.userid);
+    if($scope.userid){
+      $rootScope.authenticated = true;
+    }
+    else {
+      $rootScope.authenticated = false
+    }
+  }
+
+  $scope.logout = function(){
+    userid.set("");
+    $rootScope.authenticated = false;
+    console.log(JSON.parse(JSON.stringify(userid.get())));
+    $window.location.href='/'
+  }
+});

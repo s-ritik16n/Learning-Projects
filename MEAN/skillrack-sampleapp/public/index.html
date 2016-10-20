@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
   <head>
     <base href="/" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Skillrack</title>
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.min.js"></script>
     <script src="js/angular-resource.min.js"></script>
+    <script src="css/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css"></link>
+    <link rel="stylesheet" href="css/bootstrap.min.css"></link>
     <script src="js/app.js"></script>
+    <style>
+      ul #pg{
+        float: right;
+      }
+    </style>
   </head>
   <body>
-    <a href="/signup" style="float:right">Signup</a>
-    <div ng-app="app" ng-controller="log">
-    <form>
-      <label for="id">ID:</label>
-      <input type="text" required id="id" name="id" ng-model="id"/>
-      <label for="pass">Password:</label>
-      <input type="password" required id="pass" name="password" ng-model="password"/>
-      <br/>
-      <input type="radio" name="check" value="0" ng-model="check"/>student
-      <input type="radio" name="check" value="1" ng-model="check"/>teacher<br />
-      <button type="submit" ng-click="login()">Submit</button>
-    </form>
-    <br/>
-    <span ng-model="message" ng-show="message" style="color:red">{{message}}</span>
+    <nav class="navbar navbar-inverse" ng-controller="log" data-ng-init="load()">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">SKILLRACK<sub>&lt;clone/&gt;</sub></a>
+    </div>
+    <ul class="nav navbar-nav" style="float:right">
+      <li ng-if="authenticated" style="color:white;margin-top:15px;">Logged in as {{userid}}</li>
+      <li ng-if="authenticated" ><a href ng-click="logout()">Logout</a></li>
+      <li><a href="/signup" ng-hide="authenticated">Signup</a></li>
+    </ul>
+
   </div>
+</nav>
+<div ng-view>
+</div>
   </body>
 </html>

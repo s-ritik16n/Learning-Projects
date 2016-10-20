@@ -6,13 +6,14 @@ var session = require('express-session');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : PASSWORD_HERE,
+  password : '2340532',
   database : 'dbmsPranav'
 });
 
 connection.connect();
 
 var app = express();
+
 
 app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.json());
@@ -24,9 +25,10 @@ app.use(session({
     cookie : {secure:false},
     maxAge: 24*60*60*1000
 }));
+
 app.route('/')
 .get(function(req,res){
-  res.sendFile(path.join(__dirname,'public','index.html'));
+  res.sendFile('index.html');
 })
 .post(function(req,res){
 if(req.body.check == 0){
@@ -98,7 +100,7 @@ if(req.body.check == 1){
 
 app.route('/signup')
 .get(function(req,res){
-  res.sendFile(path.join(__dirname,'public','signup.html'))
+  res.sendFile(path.join(__dirname,'public','index.html'))
 })
 .post(function(req,res){
   if(req.body.check == 0){
@@ -113,15 +115,13 @@ app.route('/signup')
       date: Date.now().toString()
     }
     connection.query("INSERT INTO student set ?",values,function(err,result){
-      try {
-        if(err){
-          throw(err)
-        }
-      } catch (e) {
-        console.error(e);
-        res.json(e);
-        return;
-      }
+      console.log(result);
+    if(err){
+      res.json({
+        exists:true,
+      })
+    }
+    else{
       if(result.affectedRows>0){
         res.json({
             exists:false,
@@ -135,6 +135,7 @@ app.route('/signup')
           exists:true
         });
       }
+    }
     });
   }
   else if(req.body.check == 1){
@@ -149,16 +150,12 @@ app.route('/signup')
       date: Date.now().toString()
     }
     connection.query("INSERT INTO teacher set ?",values,function(err,result){
-      try {
-        if(err){
-          throw(err)
-        }
-      } catch (e) {
-        console.error(e);
-        res.json(e)
-        return;
+      if(err){
+        res.json({
+          exists:true
+        })
       }
-      if(result.affectedRows>0){
+      else{
         res.json({
             exists:false,
             user : "t",
@@ -166,18 +163,13 @@ app.route('/signup')
             name : req.session.name
           });
       }
-      else {
-        res.json({
-          exists:true
-        });
-      }
     });
   }
 });
 
 app.route("/student")
 .get(function(req,res){
-  res.sendFile(path.join(__dirname,'public','student.html'));
+  res.sendFile(path.join(__dirname,'public','index.html'));
 })
 .post(function(req,res){
   var date = new Date();
@@ -217,7 +209,7 @@ app.get('/getcode',function(req,res){
 });
 
 app.get("/teacher",function(req,res){
-  res.sendFile(path.join(__dirname+'/public/teacher.html'));
+  res.sendFile(path.join(__dirname+'/public/index.html'));
 })
 app.get('/getteacher',function(req,res){
   connection.query("SELECT t_id,name from teacher",function(err,result){
@@ -234,7 +226,7 @@ app.get('/getteacher',function(req,res){
 });
 
 app.get('/marks',function(req,res){
-  res.sendFile(path.join(__dirname,'public','marks.html'))
+  res.sendFile(path.join(__dirname,'public','index.html'))
 });
 
 app.get('/getmarks',function(req,res){
@@ -253,7 +245,7 @@ app.get('/getmarks',function(req,res){
 })
 
 app.get('/code',function(req,res){
-  res.sendFile(path.join(__dirname,'public','code.html'))
+  res.sendFile(path.join(__dirname,'public','index.html'))
 })
 
 app.route('/code/:id')
@@ -288,6 +280,7 @@ app.route('/code/:id')
 
 app.get('/logout',function(req,res){
   delete req.session;
+  console.log("session: "+req.session);
   res.redirect('/')
 })
 app.listen("3000");

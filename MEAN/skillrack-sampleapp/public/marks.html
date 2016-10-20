@@ -1,18 +1,22 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Skillrack</title>
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-route.min.js"></script>
-    <script src="js/angular-resource.min.js"></script>
-    <script src="js/app.js"></script>
-  </head>
-  <body ng-app="app" ng-controller="student" data-ng-init="marks()">
-    <a href="/student" style="float:right">Back</a>
-    <h3>Marks</h3>
-    <div ng-repeat="r in result">
-        Title : {{r.title}}
-        <br />Marks : {{r.marks}}<span ng-if="!r.marks">not evaluated</span>
-      <br /><br />
-    </div>
-  </body>
+<div class="container-fluid">
+<a href="/student" style="float:right">Back</a>
+  <h3>Marks</h3>
+  <div data-ng-init="marks()">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Marks</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr  ng-repeat="r in result">
+        <td>{{r.title}}</td>
+        <td>{{r.marks}}<span ng-if="!r.marks">evaluation pending</td>
+      </tr>
+  </tbody>
+    </table>
+  </div>
+</div>
+</div>
