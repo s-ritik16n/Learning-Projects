@@ -1,0 +1,25 @@
+<div data-ng-init="loadq()">
+  <div>
+    <h2>{{statement}}</h2>
+    <div style="float:right">Posted on: {{top}}</div><hr />
+    <h5>{{desc}}</h5>
+  </div>
+  <div ng-repeat='a in answer' class="jumbotron">
+    <div>{{a.txt}}</div>
+    <br />
+    <div><span ng-model="a.upvotes" style="font-family:monospace">upvotes:<span class="badge">{{a.upvotes}}</span></span>
+    <span ng-model="a.downvotes" style="font-family:monospace">downvotes:<span class="badge">{{a.downvotes}}</span></span>
+    <span style="float:right;font-family:monospace">by: {{a.u_id}}</span></div><br />
+    <button type="submit" ng-click="upvote(a.a_id,a)" class="btn btn-success btn-sm">Upvote</button>
+    <button type="submit" ng-click="downvote(a.a_id,a)" class="btn btn-sm">Downvote</button>
+  </div>
+  <button type="submit" class="btn btn-primary" ng-click="click()">Write an Answer</button>
+  <form>
+    <br />
+    <div class="form-group">
+      <textarea class="form-control" required rows="5" name="answer" ng-model="ans" id="answer" ng-show="clicked" placeholder="Your response here"></textarea><br />
+      <button type="button"  id="st" class="btn btn-success" ng-show="clicked" ng-click="putans()">Submit</button>
+      <button type="button" class="btn btn-default" ng-show="clicked" ng-click="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

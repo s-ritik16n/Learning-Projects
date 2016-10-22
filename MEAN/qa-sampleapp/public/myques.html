@@ -1,0 +1,8 @@
+<br /><br />
+<div data-ng-init="myques()">
+  <div ng-repeat = 'q in ques'>
+    <a href ng-click="send(q.q_id)">{{q.stmt}}</a><span style="float:right">{{q.timeofpost}}</span><hr />
+  </div>
+</div>
+<button type="button" class="btn btn-primary" ng-click="loadformques()">POSt A NEW QUESTION</button>
+<form
