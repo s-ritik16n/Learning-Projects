@@ -19,10 +19,11 @@ app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(session({
     secret : 'cookieSecret',
-    resave : false,
+    resave : true,
     saveUninitialized:true,
     cookie : {secure:false},
-    maxAge: 24*60*60*1000
+    expires : new Date(Date.now() + 3600000),
+    maxAge: new Date(Date.now() + 3600000)
 }));
 
 app.route('/')
@@ -30,16 +31,22 @@ app.route('/')
   res.sendFile(path.join(__dirname,'public','index.html'));
 })
 .post(function(req,res){
+  req.session.user='';
   values = {
     user: req.body.username,
     password:req.body.password
   }
   connection.query("SELECT * FROM user where username = ? and password = ?",[values.user,values.password],function(err,result){
-    if(err){
-      res.json({
-        exists: false
-      })
+    console.log(result);
+    try {
+      if(err){
+        throw(err)
+      }
+    } catch (e) {
+      console.error(e);;
+      return;
     }
+    if(result.length>0){
     req.session.user = result[0].username;
     req.session.save();
     console.log(req.session.user);
@@ -48,9 +55,42 @@ app.route('/')
       exists:true,
       username : result[0].username,
       name : result[0].name
-    })
+      })
+    }
+    else {
+      res.json({exists:false})
+    }
   })
 });
+
+app.route('/signup')
+.get(function(req,res){
+  res.sendFile(path.join(__dirname,'public','index.html'));
+})
+.post(function(req,res){
+  req.session.user = '';
+  values = {
+    username: req.body.username,
+    password : req.body.password,
+    about_me : req.body.me,
+    name : req.body.name
+  }
+  connection.query("INSERT INTO user set ?",values,function(err,result){
+    if(err){
+      res.json({
+        exists : true
+      });
+    }
+    else {
+      req.session.user = req.body.username;
+      req.session.save();
+      res.json({
+        exists : false,
+        id: req.session.user
+      })
+    }
+  })
+})
 
 app.get('/home',function(req,res){
   res.sendFile(path.join(__dirname,'public','index.html'));
@@ -141,6 +181,24 @@ app.get('/getmyques',function(req,res){
   })
 })
 
+app.post('/postques',function(req,res){
+  values = {
+    stmt: req.body.stmt,
+    dsc : req.body.dsc,
+    u_id : req.session.user
+  }
+  connection.query("INSERT INTO questions set ? ",values,function(err,result){
+    if(err){
+      console.log(err);
+      return;
+    }
+    else {
+      console.log(result.insertId);
+      res.json(result.insertId);
+    }
+  })
+})
+
 app.get('/myques',function(req,res){
   res.sendFile(__dirname+'/public/index.html')
 })
@@ -153,6 +211,31 @@ app.get('/getallq',function(req,res){
   connection.query("SELECT * FROM questions order by q_id desc",function(err,result){
     res.json(result);
   })
+})
+
+app.post('/postcomment',function(req,res){
+  values = {
+    a_id : req.body.a_id,
+    u_id : req.body.u_id,
+    stmt : req.body.stmt
+  }
+  connection.query('INSERT INTO comments set ?',values,function(err,result){
+    if(result.affectedRows > 0){
+      res.json(result.insertId);
+    }
+  })
+})
+
+app.get('/getcomments/:id',function(req,res){
+  connection.query("select * from comments where a_id in (select a_id from answers where q_id=?)",req.params.id,function(err,result){
+    console.log("commments result:"+result);
+    res.json(result);
+  })
+})
+
+app.get('/logout',function(req,res){
+  delete req.session;
+  console.log(req.session);
 })
 
 app.listen('3000');

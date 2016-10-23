@@ -9,6 +9,10 @@ app.config(function($locationProvider,$routeProvider){
     templateUrl: 'main.html',
     controller : 'auth'
   }).
+  when('/signup',{
+    templateUrl : 'signup.html',
+    controller: 'auth'
+  }).
   when('/home',{
     templateUrl : 'home.html',
     controller: 'home'
@@ -56,7 +60,7 @@ app.factory('setuserid',function(){
 })
 
 
-app.controller('auth',function($scope,$http,$window,setuserid){
+app.controller('auth',function($scope,$http,$window,setuserid,setdata,$rootScope){
 
   $scope.login = function(){
     var data = JSON.stringify({
@@ -64,16 +68,58 @@ app.controller('auth',function($scope,$http,$window,setuserid){
       password : $scope.password
     })
     $http.post('/',data).success(function(result){
-      setuserid.set($scope.username)
-      console.log(result);
-      if(result.exists){
+      if(result.exists==true){
+        setuserid.set($scope.username)
+        $rootScope.authenticated = true;
         $window.location.href = '/home';
+      }
+      else {
+        console.log("login");
+        $rootScope.authenticated=false;
+        $rootScope.id = '';
+        $scope.message="invalid credentials"
+      }
+    })
+  }
+  $scope.loadauth =  function(){
+    if(JSON.parse(JSON.stringify(setuserid.get()))){
+      $rootScope.authenticated = true;
+      $rootScope.userid=JSON.parse(JSON.stringify(setuserid.get()));
+    }
+    else {
+      $rootScope.authenticated = false
+    }
+  }
+  $scope.logout = function(){
+    $rootScope.authenticated = false;
+    setuserid.set("");
+    setdata.set("");
+    $rootScope.userid = "";
+    $window.location.href='/'
+    $http.get('/logout');
+  }
+  $scope.signup = function(){
+    var data = JSON.stringify({
+      username:$scope.username,
+      password:$scope.password,
+      name : $scope.name,
+      me : $scope.me
+    })
+    $http.post('/signup',data).success(function(result){
+      if(result.exists==true){
+        $scope.message = "username is already taken or invalid";
+      }
+      else {
+        $rootScope.authenticated = true;
+        setuserid.set(result.id);
+        $rootScope.userid = result.id;
+        $window.location.href='/home'
       }
     })
   }
 })
 
-app.controller('home',function($scope,$window,$http,setdata,$location,$anchorScroll,setuserid){
+app.controller('home',function($scope,$window,$http,setdata,$location,$anchorScroll,setuserid,$timeout){
   $scope.loadques = function(){
   $http.get('/getrecent').success(function(result){
     $scope.recent = result;
@@ -95,11 +141,18 @@ app.controller('home',function($scope,$window,$http,setdata,$location,$anchorScr
     })
     $http.get('/answer/'+id).success(function(result){
       $scope.answer = result;
+      console.log(result);
+      $http.get('/getcomments/'+id).success(function(result){
+        $scope.comments = result;
+      })
     })
   }
   $scope.click = function(){
     $scope.clicked = true;
-  //  $location.hash('submit')
+    //$location.hash("st");
+  $timeout(function(){
+    $anchorScroll('st')
+  })
   }
   $scope.scroll = function(scrl){
     $anchorScroll(scrl);
@@ -135,6 +188,7 @@ app.controller('home',function($scope,$window,$http,setdata,$location,$anchorScr
       var newPost = JSON.parse(data);
       newPost.upvotes = 0;
       newPost.downvotes = 0;
+      newPost.a_id = result.insertId;
       console.log(typeof JSON.parse(data));
       $scope.answer.push(newPost);
       $scope.ans="";
@@ -147,5 +201,71 @@ app.controller('home',function($scope,$window,$http,setdata,$location,$anchorScr
       console.log(result);
       $scope.ques = result;
     })
+  }
+
+  $scope.loadformques = function(){
+    $scope.loadform = true;
+    $scope.success = false;
+    $scope.txt='';
+    $scope.dsc='';
+    $timeout(function() {
+        $anchorScroll("submit");
+    });
+  }
+
+  $scope.cancelformques = function(){
+    $scope.loadform = false;
+    $scope.success = false;
+  }
+
+  $scope.submitques = function(){
+    var data = JSON.stringify({
+      u_id: JSON.parse(JSON.stringify(setuserid.get())),
+      stmt : $scope.txt,
+      dsc : $scope.dsc
+    })
+    $http.post('/postques',data).success(function(id){
+      console.log(id);
+      $http.get('/question/'+id).success(function(result){
+        console.log(result[0]);
+        $scope.ques.push(result[0])
+        $scope.success = true;
+        $scope.loadform = false;
+        $scope.txt='';
+        $scope.dsc='';
+      })
+    })
+  }
+
+  $scope.showComment = function(id){
+    console.log(id);
+    $scope.meanid = id;
+    $scope.comment = true;
+    $scope.commentext = '';
+    /*$timeout(function(){
+      $anchorScroll('cmt')
+    })*/
+  }
+  $scope.putComment = function(id,txt){
+    console.log($scope.commentext);
+    var data = JSON.stringify({
+      stmt : txt,
+      a_id : id,
+      u_id : JSON.parse(JSON.stringify(setuserid.get()))
+    })
+    $http.post('/postcomment/',data).success(function(result){
+      $scope.comments.push(JSON.parse(data))
+      $scope.comment = false;
+      $scope.commentext='';
+    })
+  }
+  $scope.loadComments = function(id){
+    console.log(id);
+    $http.get('/getcomments/'+id).success(function(result){
+      $scope.comments = result;
+    })
+  }
+  $scope.cancelComment = function(){
+    $scope.comment = false;
   }
 })
