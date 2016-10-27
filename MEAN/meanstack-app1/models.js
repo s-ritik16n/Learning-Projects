@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connext("mongodb://localhost/dbmsprojapp")
+mongoose.connect("mongodb://localhost/dbmsprojapp")
 
 var userSchema = new mongoose.Schema({
   username:{
@@ -14,7 +14,7 @@ var userSchema = new mongoose.Schema({
   name:{
     type:String,
     required: true
-  }
+  },
   about_me:{
     type: String,
     required: true
@@ -29,7 +29,7 @@ var questionSchema = new mongoose.Schema({
   description:{
     type: String,
   },
-  timeOfPost{
+  timeOfPost:{
     type: Date,
     default: Date.now
   },
