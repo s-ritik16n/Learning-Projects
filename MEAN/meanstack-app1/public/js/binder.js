@@ -6,27 +6,27 @@ app.config(function($locationProvider,$routeProvider){
   $locationProvider.html5Mode({enabled:true})
   $routeProvider.
   when('/',{
-    templateUrl: 'main.html',
+    templateUrl: 'partials/main.html',
     controller : 'auth'
   }).
   when('/signup',{
-    templateUrl : 'signup.html',
+    templateUrl : 'partials/signup.html',
     controller: 'auth'
   }).
   when('/home',{
-    templateUrl : 'home.html',
+    templateUrl : 'partials/home.html',
     controller: 'home'
   }).
   when('/ques',{
-    templateUrl : 'question.html',
+    templateUrl : 'partials/question.html',
     controller : 'home'
   }).
   when('/allques',{
-    templateUrl: 'all.html',
+    templateUrl: 'partials/all.html',
     controller : 'home'
   }).
   when('/myques',{
-    templateUrl:'myques.html',
+    templateUrl:'partials/myques.html',
     controller:'home'
   })
 })

@@ -18,5 +18,10 @@ app.use(session({
 }));
 app.use(express.static(__dirname+'/public'));
 
+app.route('/').
+get(function(req,res){
+  res.sendFile(__dirname+'/public/index.html')
+})
+
 app.listen('3000');
 console.log("Magic happens at port 3000");
