@@ -1,0 +1,17 @@
+{
+  "name": "meanstack-app1",
+  "version": "1.0.0",
+  "description": "trying to clone my DBMS project website here replacing mysql with mongoose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ritik",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "mongoose": "^4.6.5"
+  }
+}
