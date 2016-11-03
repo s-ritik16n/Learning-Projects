@@ -18,6 +18,35 @@ app.use(session({
 }));
 app.use(express.static(__dirname+'/public'));
 
+app.route('/')
+.get(function(req,res){
+  res.sendFile(path.join(__dirname,'public','index.html'));
+})
+.post(function(req,res){
+  req.session.user='';
+  User.find({username:req.body.username,password:req.body.password},function(err,user){
+    try {
+      if(err){
+        throw err;
+      }
+      else {
+        console.log(user);
+        req.session.user = user[0].username;
+        req.session.save();
+        res.json({
+          exists : true,
+          username : user[0].username,
+          name : user[0].name
+        });
+      }
+    } catch (e) {
+      res.json({
+        exists:false
+      })
+    }
+  });
+});
+
 app.route('/signup').
 get(function(req,res){
   res.sendFile(__dirname+'/public/index.html')
