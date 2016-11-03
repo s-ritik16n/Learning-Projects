@@ -111,8 +111,8 @@ app.controller('auth',function($scope,$http,$window,setuserid,setdata,$rootScope
       }
       else {
         $rootScope.authenticated = true;
-        setuserid.set(result.id);
-        $rootScope.userid = result.id;
+        setuserid.set(result.username);
+        $rootScope.userid = result.username;
         $window.location.href='/home'
       }
     })
