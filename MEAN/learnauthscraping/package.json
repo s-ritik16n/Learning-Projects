@@ -1,0 +1,17 @@
+{
+  "name": "learnauthscraping",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ritik",
+  "license": "ISC",
+  "dependencies": {
+    "needle": "^1.3.0",
+    "nightmare": "^2.8.1",
+    "request": "^2.76.0",
+    "urllib": "^2.17.0"
+  }
+}

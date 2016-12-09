@@ -153,7 +153,7 @@ app.controller('render',function($http,$rootScope,$interval,$scope,$timeout,code
     console.log(JSON.parse(JSON.stringify(userid.get())));
     $window.location.href='/'
   }
-  
+
 });
 
 app.controller("log",function($rootScope,$scope,$http,$window,$location,id,userid){
