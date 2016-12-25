@@ -4,3 +4,4 @@
 /MEAN/skillrack-sampleapp/node_modules/*
 /MEAN/DBMSproject/node_modules/*
 /MEAN/mocha-n-chai/node_modules/*
+/phantomjs/node_modules/*
