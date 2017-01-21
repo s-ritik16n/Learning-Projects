@@ -1,4 +1,4 @@
-<html ng-app="app">
+<html ng-app="app" ng-clock>
 <head>
   <base href="/" />
   <title>< /></title>
@@ -8,12 +8,14 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/binder.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Padauk">
 </head>
 <body>
-  <nav class="navbar navbar-inverse" ng-controller="auth" data-ng-init="loadauth()">
+  <nav class="navbar navbar-inverse navi" ng-controller="auth" data-ng-init="loadauth()">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/">Quora<sub>&lt;clone/&gt;</sub></a>
+      <a class="navbar-brand" href="/">Q &amp; A</a>
     </div>
     <ul class="nav navbar-nav">
     <li><a href="/home" ng-show="authenticated">Home</a></li>
@@ -24,14 +26,19 @@
       <li><a href="/signup" ng-hide="authenticated">Signup</a></li>
     </ul>
   </div>
+  <div id="main" ng-hide="authenticated">
+    <span id="q">Q</span><span id="and">&amp;</span><span id="a">A</span>
+  </div>
 </nav>
+<div>
 <div class="container-fluid" ng-show="authenticated">
   <ul class="nav nav-pills">
     <li><a href="/home" data-toggle="tab">Home</a></li>
     <li><a href="/allques">All Questions</a></li>
     <li><a href="/myques">My Questions</a></li>
   </ul>
-</div><br />
-  <div class="container" ng-view></div>
+</div>
+  <div class="container-fluid" ng-view></div>
+</div>
 </body>
 </html>
