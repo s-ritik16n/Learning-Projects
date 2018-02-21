@@ -1,0 +1,29 @@
+
+without using handlebars
+/*
+app.get('/',function(req,res){
+    res.type('text/plain');
+    res.send('MEADOWLARK TRAVELS');
+});
+
+app.get('/about',function(req,res){
+    res.type('text/plain');
+    res.send('about page');
+});
+
+//custom 404 page
+app.use(function(req,res){
+    res.type('text/plain');
+    res.status(404);
+    res.end('page not found');
+});
+
+//custom 500 page
+app.use(function(err,req,res,next){
+    console.error(err.stack);
+    res.type('text/plain');
+    res.status(500);
+    res.end('Internal server error');
+});
+*/
+

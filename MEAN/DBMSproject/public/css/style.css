@@ -1,0 +1,116 @@
+*{
+  border-radius: 0px !important;
+}
+#main{
+  font-size: 200px;
+  text-align: center;
+  font-family: "Padauk",sans-serif;
+}
+.labels{
+  margin-top: 1%;
+}
+.inline{
+  display: inline-block;
+}
+form{
+  margin-left: 28%;
+}
+.navi{
+  background-color: #182945;
+  height: 65%;
+ }
+ body{
+   background-color: #E8E8F0;
+ }
+#login{
+  background-color: #182945 !important;
+}
+#login:hover{
+  color: #182945 !important;
+  font-weight: bold;
+  background-color: #E8E8F0 !important;
+}
+#q{
+  color: white;
+  animation-name: q;
+  animation-duration: 4s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+#and{
+  animation-name: and;
+  animation-duration: 4s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+#a{
+  color: white;
+  animation-name: a;
+  animation-duration: 4s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+@keyframes q{
+  0%{
+    color: #182945;
+    font-size: 150px;
+  }
+  10%{
+    color: white;
+    font-size: 200px;
+  }
+  42%{
+    color: white;
+  }
+  56%{
+    color: #182945;
+  }
+  100%{
+    color:#182945;
+  }
+}
+@keyframes and{
+  0%{
+    color: #182945;
+  }
+  5%{
+    color: #182945;
+    font-size: 150px;
+  }
+  13%{
+    color: white;
+    font-size: 200px;
+  }
+  56%{
+    color: white;
+  }
+  70%{
+    color: #182945;
+  }
+  100%{
+    color: #182945;
+  }
+}
+@keyframes a{
+  0%{
+    color: #182945;
+  }
+  12%{
+    color: #182945;
+    font-size: 15px;
+  }
+  18%{
+    color: white;
+    font-size: 200px;
+  }
+  70%{
+    color: white;
+  }
+  84%{
+    color: #182945;
+  }
+  100%{
+    color: #182945;
+  }
+}

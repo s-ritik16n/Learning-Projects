@@ -1,0 +1,23 @@
+<div class="container-fluid">
+<div data-ng-init="load()">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <th>
+            Codes
+          </th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="code in codes" ng-show="codes">
+            <td>
+              <a href ng-click="send(code.id)">{{code.title}}</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <div ng-model="message">
+    <h4>{{message}}</h4>
+  </div>
+</div>
+</div>

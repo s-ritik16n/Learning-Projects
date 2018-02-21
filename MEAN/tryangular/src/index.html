@@ -1,0 +1,38 @@
+<!Doctype html>
+<html lang="en" ng-app='try'>
+<head>
+  <base href="/" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Learn Angular</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
+  <script src="/js/app/app.module.js"></script>
+  <script src="/js/app/app.config.js"></script>
+  <script src="/js/app/blog-list/blog-list.module.js"></script>
+  <script src="/js/app/blog-list/blog-list.component.js"></script>
+  <style>
+  .new-class{
+    font-size: 32px;
+  }
+  .other-class{
+    font-size: 64px;
+  }
+  .newclass2{
+    font-size: 120px;
+  }
+  </style>
+</head>
+<body>
+  <h1 class="new-class" ng-class="{'other-class':name=='Ritik','newclass2':font==120}">Hello
+    <span ng-if="name">{{name}}!</span>
+    <span ng-if="!name">World!</span></h1>
+  <input type="text" ng-model="name" />
+  <input type="text" ng-model="font" placeholder="font"/><br />
+  <div ng-view>
+
+  </div>
+</body>
+</html>

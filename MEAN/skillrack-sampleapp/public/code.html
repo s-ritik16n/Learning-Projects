@@ -1,0 +1,17 @@
+<div class="container" data-ng-init="renders()">
+  <pre>
+    {{code}}
+  </pre>
+  <form>
+    <input type="number" name="marks" placeholder="marks" ng-model="marks"/>
+    <button type="submit" ng-click="update()">Post</button>
+  </form>
+  <div>
+    <span>{{done}}</span>
+    <span style="color:red">{{err}}</span>
+  </div>
+  <div ng-show="msg">
+    <h3>{{msg}}</h3>
+  </div>
+  <a href="/teacher">Back</a>
+</div>

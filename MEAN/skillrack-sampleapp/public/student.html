@@ -1,0 +1,19 @@
+<div class="container-fluid" style="margin-bottom:5px">
+  <div>
+    <a href="/marks" style="float:right"><h4>Marks</h4></a>
+  </div>
+<div data-ng-init="load()">
+  <form action="/student" method="post">
+    <div class="form-group">
+      <label for="code">Code:</label>
+      <textarea  class="form-control" rows="20" required id="code" name="code" ></textarea>
+    </div>
+      <div ng-repeat='t in teachers' >
+        <div class="radio-inline">
+          <label><input type="radio" name="teacher" value="{{t.t_id}}" />{{t.name}}</label>
+        </div>
+      </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+</div>
