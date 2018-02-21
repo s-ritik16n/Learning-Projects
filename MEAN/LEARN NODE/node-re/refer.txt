@@ -1,1 +1,0 @@
-//http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained

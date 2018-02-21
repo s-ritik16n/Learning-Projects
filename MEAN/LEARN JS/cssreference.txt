@@ -1,5 +1,0 @@
-﻿Pseudo classes: after colon;
-a:link, a:visited, a:hover, a:active, a:focus
-
-specificity
-if two selectors are equally specific, the last one wins.
