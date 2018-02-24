@@ -8,8 +8,8 @@ class Counter extends React.Component {
     this.state = {
       count : 0
     }
-
   }
+  
   handleAddOne() {
       console.log("addOne");
 
@@ -41,14 +41,17 @@ class Counter extends React.Component {
 
       */
   }
+
   handleMinusOne() {
     console.log("minusOne");
     this.setState((prevState) => ({count : prevState.count - 1}));
   }
+
   handleReset() {
     console.log("reset");
-    this.setState((prevState) => ({count : 0}))
+    this.setState(() => ({count : 0}));
   }
+
   render() {
     return (
       <div>
