@@ -1,48 +1,121 @@
-"use strict";
+'use strict';
 
-var appRoot = document.getElementById('app');
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var toggleText = "show";
-var toggleBool = true;
-var details = "";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var toggleVisibility = function toggleVisibility(e) {
-  e.preventDefault();
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-  toggleBool = !toggleBool;
-  if (toggleBool) {
-    details = "";
-    toggleText = "show";
-  } else {
-    details = "details";
-    toggleText = "hide";
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Person = function () {
+  function Person() {
+    var age = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'anonymous';
+
+    _classCallCheck(this, Person);
+
+    this.name = name;
+    this.age = age;
   }
-  VisibilityToggle();
-};
 
-var VisibilityToggle = function VisibilityToggle() {
+  _createClass(Person, [{
+    key: 'getGreeting',
+    value: function getGreeting() {
+      // return 'Hi! ' + this.name
+      return 'Hi! I am ' + this.name + '.';
+    }
+  }, {
+    key: 'getDescription',
+    value: function getDescription() {
+      return this.name + ' is ' + this.age + ' year(s) old.';
+    }
+  }]);
 
-  var templateOne = React.createElement(
-    "div",
-    null,
-    React.createElement(
-      "h1",
-      null,
-      "Visibility toggle"
-    ),
-    React.createElement(
-      "button",
-      { onClick: toggleVisibility },
-      toggleText,
-      " details"
-    ),
-    React.createElement(
-      "p",
-      null,
-      details
-    )
-  );
-  ReactDOM.render(templateOne, appRoot);
-};
+  return Person;
+}();
 
-VisibilityToggle();
+var Student = function (_Person) {
+  _inherits(Student, _Person);
+
+  function Student(name, age, major) {
+    _classCallCheck(this, Student);
+
+    // here too. sending them to super in different order works. how?
+    var _this = _possibleConstructorReturn(this, (Student.__proto__ || Object.getPrototypeOf(Student)).call(this, name, age)); // accepting arguments in different order also works. how?
+
+
+    _this.major = major;
+    return _this;
+  }
+
+  _createClass(Student, [{
+    key: 'hasMajor',
+    value: function hasMajor() {
+      return !!this.major;
+    }
+  }, {
+    key: 'getDescription',
+    value: function getDescription() {
+      var description = _get(Student.prototype.__proto__ || Object.getPrototypeOf(Student.prototype), 'getDescription', this).call(this);
+
+      if (this.hasMajor()) {
+        description += ' Their major is ' + this.major + '.';
+      }
+      return description;
+    }
+  }]);
+
+  return Student;
+}(Person);
+
+var Traveller = function (_Person2) {
+  _inherits(Traveller, _Person2);
+
+  function Traveller(age, name, major, homeLocation) {
+    _classCallCheck(this, Traveller);
+
+    var _this2 = _possibleConstructorReturn(this, (Traveller.__proto__ || Object.getPrototypeOf(Traveller)).call(this, age, name));
+
+    _this2.major = major;
+    _this2.homeLocation = homeLocation;
+    return _this2;
+  }
+
+  _createClass(Traveller, [{
+    key: 'getGreeting',
+    value: function getGreeting() {
+      var greeting = _get(Traveller.prototype.__proto__ || Object.getPrototypeOf(Traveller.prototype), 'getGreeting', this).call(this);
+      if (this.homeLocation) {
+        greeting += ' I\'m visiting ' + this.homeLocation;
+      }
+      return greeting;
+    }
+  }]);
+
+  return Traveller;
+}(Person);
+
+var me = new Student(10, name = 'Ritik Saxena', 'Computer Science'); // why does this give error
+// console.log(me);
+console.log(me.getGreeting());
+console.log(me.getDescription());
+console.log(me.hasMajor());
+
+var me2 = new Student();
+// console.log(me2);
+console.log(me2.getGreeting());
+console.log(me2.getDescription());
+console.log(me2.hasMajor());
+
+var trav1 = new Traveller(10, name = 'Ritik Saxena', 'Computer Science', 'Bangalore'); // why does this give error
+// console.log(trav1);
+console.log(trav1.getGreeting());
+console.log(trav1.getDescription());
+
+var trav2 = new Traveller();
+// console.log(trav2);
+console.log(trav2.getGreeting());
+console.log(trav2.getDescription());
