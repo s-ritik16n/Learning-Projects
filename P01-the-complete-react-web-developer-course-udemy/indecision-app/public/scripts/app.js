@@ -17,8 +17,9 @@ var IndecisionApp = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
     _this.state = {
-      options: ['One', 'Two', 'Three']
+      options: props.options
     };
+    console.log(_this.state.options);
     _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
     _this.handlePick = _this.handlePick.bind(_this);
     _this.handleAddOption = _this.handleAddOption.bind(_this);
@@ -28,8 +29,10 @@ var IndecisionApp = function (_React$Component) {
   _createClass(IndecisionApp, [{
     key: 'handleDeleteOption',
     value: function handleDeleteOption() {
+      var _this2 = this;
+
       this.setState(function () {
-        return { options: [] };
+        return { options: _this2.props.options };
       });
     }
   }, {
@@ -60,7 +63,7 @@ var IndecisionApp = function (_React$Component) {
       return React.createElement(
         'div',
         null,
-        React.createElement(Header, { title: title, subtitle: subtitle }),
+        React.createElement(Header, { subtitle: subtitle }),
         React.createElement(Action, { hasOptions: this.state.options.length > 0, handlePick: this.handlePick }),
         React.createElement(Options, {
           options: this.state.options,
@@ -74,9 +77,14 @@ var IndecisionApp = function (_React$Component) {
   return IndecisionApp;
 }(React.Component);
 
+// the sole reason for putting this is to keep the app from breaking if options is not passed in <IndecisionApp /> in the render call
+
+
+IndecisionApp.defaultProps = {
+  options: []
+};
+
 // stateless functional component
-
-
 var Header = function Header(props) {
   return React.createElement(
     'div',
@@ -86,12 +94,16 @@ var Header = function Header(props) {
       null,
       props.title
     ),
-    React.createElement(
+    props.subtitle && React.createElement(
       'h2',
       null,
       props.subtitle
     )
   );
+};
+
+Header.defaultProps = {
+  title: "Indecision"
 };
 
 // class Header extends React.Component{
@@ -122,6 +134,7 @@ var Action = function Action(props) {
     )
   );
 };
+
 //
 // class Action extends React.Component {
 //   render() {
@@ -137,6 +150,7 @@ var Action = function Action(props) {
 //     );
 //   }
 // }
+
 
 // stateless functional component
 var Options = function Options(props) {
@@ -206,14 +220,14 @@ var AddOption = function (_React$Component3) {
   function AddOption(props) {
     _classCallCheck(this, AddOption);
 
-    var _this3 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+    var _this4 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
 
-    _this3.handleAddOption = _this3.handleAddOption.bind(_this3);
+    _this4.handleAddOption = _this4.handleAddOption.bind(_this4);
 
-    _this3.state = {
+    _this4.state = {
       error: undefined
     };
-    return _this3;
+    return _this4;
   }
 
   _createClass(AddOption, [{
@@ -258,26 +272,4 @@ var AddOption = function (_React$Component3) {
   return AddOption;
 }(React.Component);
 
-// stateless functional components
-
-var User = function User(props) {
-  return React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'p',
-      null,
-      'Name: ',
-      props.name
-    ),
-    React.createElement(
-      'p',
-      null,
-      'Age: ',
-      props.age
-    )
-  );
-};
-
-// ReactDOM.render(<User name="Ritik" age="20"/>, document.getElementById("app"));
-ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById("app"));
+ReactDOM.render(React.createElement(IndecisionApp, { options: ['Devil\'s Den', 'Second District'] }), document.getElementById("app"));

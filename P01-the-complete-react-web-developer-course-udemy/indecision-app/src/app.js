@@ -1,17 +1,17 @@
 class IndecisionApp extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      options: ['One', 'Two', 'Three']
+      options: props.options
     }
+    console.log(this.state.options);
     this.handleDeleteOption   = this.handleDeleteOption.bind(this);
     this.handlePick           = this.handlePick.bind(this);
     this.handleAddOption      = this.handleAddOption.bind(this);
   }
 
   handleDeleteOption() {
-    this.setState(() => ({options:[]}));
+    this.setState(() => ({options: this.props.options}));
   }
 
   handlePick() {
@@ -35,7 +35,7 @@ class IndecisionApp extends React.Component {
 
     return (
       <div>
-        <Header title={title} subtitle={subtitle}/>
+        <Header subtitle={subtitle}/>
         <Action hasOptions={this.state.options.length > 0} handlePick={this.handlePick}/>
         <Options
           options={this.state.options}
@@ -47,14 +47,23 @@ class IndecisionApp extends React.Component {
   }
 }
 
+// the sole reason for putting this is to keep the app from breaking if options is not passed in <IndecisionApp /> in the render call
+IndecisionApp.defaultProps = {
+  options : []
+};
+
 // stateless functional component
 const Header = (props) => {
   return (
     <div>
       <h1>{props.title}</h1>
-      <h2>{props.subtitle}</h2>
+      {props.subtitle && <h2>{props.subtitle}</h2>}
     </div>
   );
+};
+
+Header.defaultProps = {
+  title : "Indecision"
 };
 
 // class Header extends React.Component{
@@ -83,6 +92,8 @@ const Action = (props) => {
     </div>
   );
 };
+
+
 //
 // class Action extends React.Component {
 //   render() {
@@ -98,6 +109,7 @@ const Action = (props) => {
 //     );
 //   }
 // }
+
 
 // stateless functional component
 const Options = (props) => {
@@ -173,16 +185,4 @@ class AddOption extends React.Component {
   }
 }
 
-// stateless functional components
-
-const User = (props) => {
-  return (
-    <div>
-      <p>Name: {props.name}</p>
-      <p>Age: {props.age}</p>
-    </div>
-  );
-};
-
-// ReactDOM.render(<User name="Ritik" age="20"/>, document.getElementById("app"));
-ReactDOM.render(<IndecisionApp />, document.getElementById("app"));
+ReactDOM.render(<IndecisionApp options={['Devil\'s Den', 'Second District']}/>, document.getElementById("app"));
