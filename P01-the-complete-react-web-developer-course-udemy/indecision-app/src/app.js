@@ -170,8 +170,8 @@ class AddOption extends React.Component {
 
     // error is equivalent to error: error
     this.setState(()=>({error}));
-
   }
+
   render() {
     return (
       <div>
