@@ -29,6 +29,36 @@ var IndecisionApp = function (_React$Component) {
   }
 
   _createClass(IndecisionApp, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // not available for stateless functions
+      console.log('fetching data');
+      try {
+
+        var json = localStorage.getItem('options');
+        var options = JSON.parse(json);
+
+        if (options) {
+          this.setState(function () {
+            return { options: options };
+          });
+        }
+      } catch (e) {}
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevState.options.length !== this.state.options.length) {
+        console.log('saving data');
+        localStorage.setItem('options', JSON.stringify(this.state.options));
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      console.log('componentWillUnmount');
+    }
+  }, {
     key: 'handleDeleteOptions',
     value: function handleDeleteOptions() {
       var _this2 = this;

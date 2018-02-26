@@ -12,6 +12,34 @@ class IndecisionApp extends React.Component {
     this.handleDeleteOption         = this.handleDeleteOption.bind(this);
   }
 
+  componentDidMount() {
+    // not available for stateless functions
+    console.log('fetching data');
+    try {
+
+      const json = localStorage.getItem('options');
+      const options = JSON.parse(json);
+
+      if (options) {
+        this.setState(() => ({options}));
+      }
+
+    } catch (e) {
+
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.options.length !== this.state.options.length) {
+      console.log('saving data');
+      localStorage.setItem('options',JSON.stringify(this.state.options));
+    }
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+
   handleDeleteOptions() {
     this.setState(() => ({options: this.props.options}));
   }
@@ -182,6 +210,7 @@ class AddOption extends React.Component {
 
     // error is equivalent to error: error
     this.setState(()=>({error}));
+    
   }
 
   render() {
