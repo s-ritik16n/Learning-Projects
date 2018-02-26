@@ -8,49 +8,40 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var IndecisionApp = function (_React$Component) {
-  _inherits(IndecisionApp, _React$Component);
+var Counter = function (_React$Component) {
+  _inherits(Counter, _React$Component);
 
-  function IndecisionApp(props) {
-    _classCallCheck(this, IndecisionApp);
+  function Counter(props) {
+    _classCallCheck(this, Counter);
 
-    var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
+
+    _this.handleAddOne = _this.handleAddOne.bind(_this);
+    _this.handleMinusOne = _this.handleMinusOne.bind(_this);
+    _this.handleReset = _this.handleReset.bind(_this);
 
     _this.state = {
-      options: props.options
+      count: 0
     };
-    console.log(_this.state.options);
-
-    _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
-    _this.handlePick = _this.handlePick.bind(_this);
-    _this.handleAddOption = _this.handleAddOption.bind(_this);
-    _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
     return _this;
   }
 
-  _createClass(IndecisionApp, [{
+  _createClass(Counter, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // not available for stateless functions
-      console.log('fetching data');
-      try {
-
-        var json = localStorage.getItem('options');
-        var options = JSON.parse(json);
-
-        if (options) {
-          this.setState(function () {
-            return { options: options };
-          });
-        }
-      } catch (e) {}
+      console.log('componentDidMount');
+      var count = localStorage.getItem('count');
+      count = parseInt(count, 10);
+      if (!isNaN(count)) this.setState(function () {
+        return { count: count };
+      });
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      if (prevState.options.length !== this.state.options.length) {
-        console.log('saving data');
-        localStorage.setItem('options', JSON.stringify(this.state.options));
+      if (prevState.count !== this.state.count) {
+        console.log('componentDidUpdate');
+        localStorage.setItem('count', this.state.count);
       }
     }
   }, {
@@ -59,280 +50,86 @@ var IndecisionApp = function (_React$Component) {
       console.log('componentWillUnmount');
     }
   }, {
-    key: 'handleDeleteOptions',
-    value: function handleDeleteOptions() {
+    key: 'handleAddOne',
+    value: function handleAddOne() {
+      console.log("addOne");
+
+      // in Arrow functions with only one line of return,
+      // when returned parameter is an object and if you wish not to use the keyword return,
+      // enclose the arrow function in ()
+      this.setState(function (prevState) {
+        return { count: prevState.count + 1 };
+      });
+
+      /*
+      The newer way to implement setState is -
+      this.setState({
+      count : 0
+      });
+       but, the problem with this syntax arises when we try to access the previous state of the variable, since, there is no prevState argument possible in this syntax.
+      However, the work around is to use 'this.state.variable' -
+       this.setState({
+      count : this.state.count + 1
+      });
+       But, this is still problematic.
+      Suppose, the two calls mentioned above are made sequentially. the user will expect the output to be 1, since, it is first made 0 and then incrememted by 1.
+      However, this is not the output one will get because the function setState is an asynchronous. The count might be equal to 1, or it might end up with the value count + 1. If the count gets incremented before it turns to 0, it will be retained and won't be turned to 0.
+       Now, what will happen if the stable syntax which we have used is followed and two similar calls are made to setState?
+       React will not handle the two setState events separately. it will batch the two calls into one and implement them sequentially. Thus, the syntax we have used is more stable.
+       */
+    }
+  }, {
+    key: 'handleMinusOne',
+    value: function handleMinusOne() {
+      console.log("minusOne");
+      this.setState(function (prevState) {
+        return { count: prevState.count - 1 };
+      });
+    }
+  }, {
+    key: 'handleReset',
+    value: function handleReset() {
+      console.log("reset");
       this.setState(function () {
-        return { options: [] };
-      });
-    }
-  }, {
-    key: 'handleDeleteOption',
-    value: function handleDeleteOption(optionToRemove) {
-      this.setState(function (prevState) {
-        return {
-          options: prevState.options.filter(function (option) {
-            return option !== optionToRemove;
-          })
-        };
-      });
-    }
-  }, {
-    key: 'handlePick',
-    value: function handlePick() {
-      var random = Math.floor(Math.random() * this.state.options.length);
-      alert(this.state.options[random]);
-    }
-  }, {
-    key: 'handleAddOption',
-    value: function handleAddOption(option) {
-      // push manipulates the original array, we should not do it. so we use concat
-      if (!option) {
-        return 'Enter valid value to add item to list';
-      } else if (this.state.options.indexOf(option) > -1) {
-        return 'This option already exists';
-      }
-      this.setState(function (prevState) {
-        return { options: prevState.options.concat(option) };
+        return { count: 0 };
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      var subtitle = "Put your life in the hands of a computer";
-
-      return React.createElement(
-        'div',
-        null,
-        React.createElement(Header, { subtitle: subtitle }),
-        React.createElement(Action, { hasOptions: this.state.options.length > 0, handlePick: this.handlePick }),
-        React.createElement(Options, {
-          options: this.state.options,
-          handleDeleteOptions: this.handleDeleteOptions,
-          handleDeleteOption: this.handleDeleteOption
-        }),
-        React.createElement(AddOption, { handleAddOption: this.handleAddOption })
-      );
-    }
-  }]);
-
-  return IndecisionApp;
-}(React.Component);
-
-// the sole reason for putting this is to keep the app from breaking if options is not passed in <IndecisionApp /> in the render call
-
-
-IndecisionApp.defaultProps = {
-  options: []
-};
-
-// stateless functional component
-var Header = function Header(props) {
-  return React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'h1',
-      null,
-      props.title
-    ),
-    props.subtitle && React.createElement(
-      'h2',
-      null,
-      props.subtitle
-    )
-  );
-};
-
-Header.defaultProps = {
-  title: "Indecision"
-};
-
-// class Header extends React.Component{
-//   render() {
-//     console.log(this.props);
-//     return (
-//       <div>
-//         <h1>{this.props.title}</h1>
-//         <h2>{this.props.subtitle}</h2>
-//       </div>
-//     );
-//   }
-// }
-
-
-// stateless functional component
-var Action = function Action(props) {
-  return React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'button',
-      {
-        onClick: props.handlePick,
-        disabled: !props.hasOptions
-      },
-      'What should I do?'
-    )
-  );
-};
-
-//
-// class Action extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <button
-//         onClick={this.props.handlePick}
-//         disabled={!this.props.hasOptions}
-//         >
-//           What should I do?
-//         </button>
-//       </div>
-//     );
-//   }
-// }
-
-
-// stateless functional component
-var Options = function Options(props) {
-  return React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'button',
-      { onClick: props.handleDeleteOptions },
-      'Remove All'
-    ),
-    props.options.length === 0 && React.createElement(
-      'p',
-      null,
-      'Please add an option!'
-    ),
-    React.createElement(
-      'ol',
-      null,
-      props.options.map(function (option) {
-        return React.createElement(Option, { key: option + '-1', optionText: option, handleDeleteOption: props.handleDeleteOption });
-      })
-    )
-  );
-};
-
-// class Options extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//
-//   render() {
-//     return (
-//       <div>
-//         <button onClick={this.props.handleDeleteOption}>Remove All</button>
-//         <ol>
-//           {
-//             this.props.options.map((option) => <Option key={`${option}-1`} optionText={option}/>)
-//           }
-//         </ol>
-//       </div>
-//     );
-//   }
-// }
-
-
-var Option = function (_React$Component2) {
-  _inherits(Option, _React$Component2);
-
-  function Option() {
-    _classCallCheck(this, Option);
-
-    return _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
-  }
-
-  _createClass(Option, [{
-    key: 'render',
-    value: function render() {
-      var _this3 = this;
-
       return React.createElement(
         'div',
         null,
         React.createElement(
-          'li',
-          { key: this.props.option },
-          this.props.optionText
+          'h1',
+          null,
+          'Count: ',
+          this.state.count
         ),
         React.createElement(
           'button',
-          { onClick: function onClick(e) {
-              _this3.props.handleDeleteOption(_this3.props.optionText);
-            } },
-          'remove'
-        )
-      );
-    }
-  }]);
-
-  return Option;
-}(React.Component);
-
-var AddOption = function (_React$Component3) {
-  _inherits(AddOption, _React$Component3);
-
-  function AddOption(props) {
-    _classCallCheck(this, AddOption);
-
-    var _this4 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
-
-    _this4.handleAddOption = _this4.handleAddOption.bind(_this4);
-
-    _this4.state = {
-      error: undefined
-    };
-    return _this4;
-  }
-
-  _createClass(AddOption, [{
-    key: 'handleAddOption',
-    value: function handleAddOption(e) {
-      e.preventDefault();
-
-      var target = e.target.elements.optionInput.value.trim();
-      var error = this.props.handleAddOption(target);
-
-      // error is equivalent to error: error
-      this.setState(function () {
-        return { error: error };
-      });
-
-      if (!error) {
-        e.target.elements.optionInput.value = "";
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return React.createElement(
-        'div',
-        null,
-        React.createElement(
-          'p',
-          null,
-          this.state.error
+          { onClick: this.handleAddOne },
+          '+1'
         ),
         React.createElement(
-          'form',
-          { onSubmit: this.handleAddOption },
-          React.createElement('input', { type: 'text', name: 'optionInput' }),
-          React.createElement(
-            'button',
-            { type: 'submit' },
-            'Add Option'
-          )
+          'button',
+          { onClick: this.handleMinusOne },
+          '-1'
+        ),
+        React.createElement(
+          'button',
+          { onClick: this.handleReset },
+          'reset'
         )
       );
     }
   }]);
 
-  return AddOption;
+  return Counter;
 }(React.Component);
 
-ReactDOM.render(React.createElement(IndecisionApp, { options: ['Devil\'s Den', 'Second District'] }), document.getElementById("app"));
+// Counter.defaultProps = {
+//   count : 0
+// };
+
+ReactDOM.render(React.createElement(Counter, { count: 4 }), document.getElementById('app'));

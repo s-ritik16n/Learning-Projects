@@ -2,7 +2,7 @@ class IndecisionApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      options: props.options
+      options: []
     }
     console.log(this.state.options);
 
@@ -84,9 +84,9 @@ class IndecisionApp extends React.Component {
 }
 
 // the sole reason for putting this is to keep the app from breaking if options is not passed in <IndecisionApp /> in the render call
-IndecisionApp.defaultProps = {
-  options : []
-};
+  // IndecisionApp.defaultProps = {
+  //   options : []
+  // };
 
 // stateless functional component
 const Header = (props) => {
