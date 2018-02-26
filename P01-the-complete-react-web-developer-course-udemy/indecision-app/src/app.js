@@ -22,12 +22,6 @@ class IndecisionApp extends React.Component {
       }))
   }
 
-  // handleDeleteOption(optionToRemove) {
-  //    this.setState((prevState) => ({
-  //      options: prevState.options.filter((option) => optionToRemove !== option)
-  //    }))
-  //   }
-
   handlePick() {
     const random = Math.floor(Math.random()*this.state.options.length);
     alert(this.state.options[random]);

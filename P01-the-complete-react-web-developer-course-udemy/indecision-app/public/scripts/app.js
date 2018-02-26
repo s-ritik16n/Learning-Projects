@@ -48,13 +48,6 @@ var IndecisionApp = function (_React$Component) {
         };
       });
     }
-
-    // handleDeleteOption(optionToRemove) {
-    //    this.setState((prevState) => ({
-    //      options: prevState.options.filter((option) => optionToRemove !== option)
-    //    }))
-    //   }
-
   }, {
     key: 'handlePick',
     value: function handlePick() {
