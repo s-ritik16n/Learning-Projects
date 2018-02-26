@@ -61,10 +61,8 @@ var IndecisionApp = function (_React$Component) {
   }, {
     key: 'handleDeleteOptions',
     value: function handleDeleteOptions() {
-      var _this2 = this;
-
       this.setState(function () {
-        return { options: _this2.props.options };
+        return { options: [] };
       });
     }
   }, {
@@ -205,6 +203,11 @@ var Options = function Options(props) {
       { onClick: props.handleDeleteOptions },
       'Remove All'
     ),
+    props.options.length === 0 && React.createElement(
+      'p',
+      null,
+      'Please add an option!'
+    ),
     React.createElement(
       'ol',
       null,
@@ -247,7 +250,7 @@ var Option = function (_React$Component2) {
   _createClass(Option, [{
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       return React.createElement(
         'div',
@@ -260,7 +263,7 @@ var Option = function (_React$Component2) {
         React.createElement(
           'button',
           { onClick: function onClick(e) {
-              _this4.props.handleDeleteOption(_this4.props.optionText);
+              _this3.props.handleDeleteOption(_this3.props.optionText);
             } },
           'remove'
         )
@@ -277,14 +280,14 @@ var AddOption = function (_React$Component3) {
   function AddOption(props) {
     _classCallCheck(this, AddOption);
 
-    var _this5 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+    var _this4 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
 
-    _this5.handleAddOption = _this5.handleAddOption.bind(_this5);
+    _this4.handleAddOption = _this4.handleAddOption.bind(_this4);
 
-    _this5.state = {
+    _this4.state = {
       error: undefined
     };
-    return _this5;
+    return _this4;
   }
 
   _createClass(AddOption, [{
@@ -294,12 +297,15 @@ var AddOption = function (_React$Component3) {
 
       var target = e.target.elements.optionInput.value.trim();
       var error = this.props.handleAddOption(target);
-      e.target.elements.optionInput.value = "";
 
       // error is equivalent to error: error
       this.setState(function () {
         return { error: error };
       });
+
+      if (!error) {
+        e.target.elements.optionInput.value = "";
+      }
     }
   }, {
     key: 'render',

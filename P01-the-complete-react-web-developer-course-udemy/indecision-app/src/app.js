@@ -41,7 +41,7 @@ class IndecisionApp extends React.Component {
   }
 
   handleDeleteOptions() {
-    this.setState(() => ({options: this.props.options}));
+    this.setState(() => ({options: []}));
   }
 
   handleDeleteOption(optionToRemove) {
@@ -152,6 +152,7 @@ const Options = (props) => {
   return (
     <div>
       <button onClick={props.handleDeleteOptions}>Remove All</button>
+      {props.options.length === 0 && <p>Please add an option!</p>}
       <ol>
         {
           props.options.map((option) => <Option key={`${option}-1`} optionText={option} handleDeleteOption={props.handleDeleteOption}/>)
@@ -206,11 +207,14 @@ class AddOption extends React.Component {
 
     let target = e.target.elements.optionInput.value.trim();
     const error = this.props.handleAddOption(target);
-    e.target.elements.optionInput.value="";
 
     // error is equivalent to error: error
     this.setState(()=>({error}));
-    
+
+    if (!error) {
+      e.target.elements.optionInput.value="";
+
+    }
   }
 
   render() {
