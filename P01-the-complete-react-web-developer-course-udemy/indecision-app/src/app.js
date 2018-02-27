@@ -15,3 +15,14 @@ console.log(anything(3,4));
 console.log(isAdult(23));
 console.log(canDrink(22));
 console.log(isSeniorCitizen(65));
+
+
+import validator from 'validator';
+console.log(validator.isEmail('test'));
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const template = React.createElement('p', {}, 'testing123');
+ReactDOM.render(template, document.getElementById('app'));
