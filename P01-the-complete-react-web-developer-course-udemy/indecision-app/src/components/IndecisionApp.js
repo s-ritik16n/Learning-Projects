@@ -7,7 +7,7 @@ import Options from './Options';
 
 export default class IndecisionApp extends React.Component {
     state = {
-        options: []
+        options:[]
     }
   // constructor(props) {
   //   super(props);
