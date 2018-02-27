@@ -4,16 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "live-server public/",
+    "build": "webpack --watch",
+    "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
   },
-  "author": "",
+  "author": "Ritik",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "babel-preset-react": "^6.24.1",
+    "live-server": "^1.2.0",
+    "webpack": "^4.0.1",
+    "webpack-cli": "^2.0.9"
   }
 }
