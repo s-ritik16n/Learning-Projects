@@ -12,7 +12,9 @@ export default class AddOption extends React.Component {
     };
   }
   handleAddOption(e) {
+
     e.preventDefault();
+    // console.log(testing);
 
     let target = e.target.elements.optionInput.value.trim();
     const error = this.props.handleAddOption(target);
@@ -32,7 +34,7 @@ export default class AddOption extends React.Component {
         <p>{this.state.error}</p>
         <form onSubmit={this.handleAddOption}>
           <input type="text" name="optionInput"/>
-          <button type="submit">Add Option</button>
+          <button>Add Option</button>
         </form>
       </div>
     );
