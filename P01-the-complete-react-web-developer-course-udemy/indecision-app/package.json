@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "live-server public/",
-    "build": "webpack --watch",
-    "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
+    "build": "webpack",
+    "dev-server": "webpack-dev-server"
   },
   "author": "Ritik",
   "license": "ISC",
@@ -22,6 +22,7 @@
     "react-dom": "^16.2.0",
     "validator": "^9.4.1",
     "webpack": "^4.0.1",
-    "webpack-cli": "^2.0.9"
+    "webpack-cli": "^2.0.9",
+    "webpack-dev-server": "^3.0.0"
   }
 }
