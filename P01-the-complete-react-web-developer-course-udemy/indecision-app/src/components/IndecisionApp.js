@@ -6,20 +6,23 @@ import Action from './Action';
 import Options from './Options';
 
 export default class IndecisionApp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      options: []
+    state = {
+        options: []
     }
-    console.log(this.state.options);
+  // constructor(props) {
+  //   super(props);
+  //   // this.state = {
+  //   //   options: []
+  //   // }
+  //   console.log(this.state.options);
+  //
+  //   this.handleDeleteOptions        = this.handleDeleteOptions.bind(this);
+  //   this.handlePick                 = this.handlePick.bind(this);
+  //   this.handleAddOption            = this.handleAddOption.bind(this);
+  //   this.handleDeleteOption         = this.handleDeleteOption.bind(this);
+  // }
 
-    this.handleDeleteOptions        = this.handleDeleteOptions.bind(this);
-    this.handlePick                 = this.handlePick.bind(this);
-    this.handleAddOption            = this.handleAddOption.bind(this);
-    this.handleDeleteOption         = this.handleDeleteOption.bind(this);
-  }
-
-  componentDidMount() {
+  componentDidMount = () => {
     // not available for stateless functions
     console.log('fetching data');
     try {
@@ -28,7 +31,7 @@ export default class IndecisionApp extends React.Component {
       const options = JSON.parse(json);
 
       if (options) {
-        this.setState(() => ({options}));
+        setState(() => ({options}));
       }
 
     } catch (e) {
@@ -36,33 +39,33 @@ export default class IndecisionApp extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate = (prevProps, prevState) => {
     if(prevState.options.length !== this.state.options.length) {
       console.log('saving data');
       localStorage.setItem('options',JSON.stringify(this.state.options));
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     console.log('componentWillUnmount');
   }
 
-  handleDeleteOptions() {
+  handleDeleteOptions = () => {
     this.setState(() => ({options: []}));
   }
 
-  handleDeleteOption(optionToRemove) {
+  handleDeleteOption = (optionToRemove) => {
       this.setState((prevState) => ({
           options: prevState.options.filter((option) => option !== optionToRemove)
       }))
   }
 
-  handlePick() {
+  handlePick = () => {
     const random = Math.floor(Math.random()*this.state.options.length);
     alert(this.state.options[random]);
   }
 
-  handleAddOption(option) {
+  handleAddOption = (option) => {
     // push manipulates the original array, we should not do it. so we use concat
     if (!option) {
       return 'Enter valid value to add item to list';
@@ -72,7 +75,7 @@ export default class IndecisionApp extends React.Component {
     this.setState((prevState) => ({options:prevState.options.concat(option)}));
   }
 
-  render() {
+  render = () => {
     const subtitle = "Put your life in the hands of a computer";
 
     return (
