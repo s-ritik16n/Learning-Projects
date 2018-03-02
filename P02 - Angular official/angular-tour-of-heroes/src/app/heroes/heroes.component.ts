@@ -31,7 +31,7 @@ export class HeroesComponent implements OnInit {
     // *************
     // this.heroes = this.heroService.getHeroes();  // old approach - which is synchronous and doesn't use Observable like HttpClient
     // *************
-    
+
   }
 
   constructor(private heroService: HeroService) { }
