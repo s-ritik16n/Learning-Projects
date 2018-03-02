@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
 import { HEROES } from '../mock-heroes';
+import { HeroService } from '../hero.service'
 
 @Component({
   selector: 'app-heroes',
@@ -15,7 +16,7 @@ export class HeroesComponent implements OnInit {
     name: 'Windstorm'
   }
 
-  heroes = HEROES;
+  heroes: Hero[];
 
   selectedHero: Hero;
 
@@ -23,9 +24,17 @@ export class HeroesComponent implements OnInit {
     this.selectedHero = hero;
   }
 
-  constructor() { }
+  getHeroes(): void {
+    this.heroService.getHeroes()
+      .subscribe(heroes => this.heroes=heroes);
+
+    // this.heroes = this.heroService.getHeroes();  // old approach - which is synchronous and doesn't use Observable like HttpClient
+  }
+
+  constructor(private heroService: HeroService) { }
 
   ngOnInit() {
+    this.getHeroes();
   }
 
 }
