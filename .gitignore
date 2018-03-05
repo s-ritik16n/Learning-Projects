@@ -6,4 +6,4 @@
 /MEAN/mocha-n-chai/node_modules/*
 /phantomjs/node_modules/*
 P01-the-complete-react-web-developer-course-udemy/indecision-app/node_modules/*
-*/node_modules/*
+node_modules
