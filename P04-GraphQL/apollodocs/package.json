@@ -1,0 +1,19 @@
+{
+  "name": "apollodocs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ritik",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-angular": "^1.0.1",
+    "apollo-angular-link-http": "^1.0.2-beta.0",
+    "apollo-cache-inmemory": "^1.1.11",
+    "apollo-client": "^2.2.7",
+    "graphql": "^0.13.1",
+    "graphql-tag": "^2.8.0"
+  }
+}
