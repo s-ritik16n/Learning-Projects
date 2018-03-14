@@ -1,34 +1,14 @@
 const express = require('express');
-const { buildSchema } = require('graphql');
-const graphhqlHTTP = require('express-graphql');
+const graphqlHTTP = require('express-graphql');
+const schema = require('./src/schema.js');
 
 let port = 3000;
+const app = express();
 
-let schema = buildSchema(`
-  type Query {
-    postTitle: String,
-    blogTitle: String
-  }`
-);
-
-let root = {
-  postTitle: () => {
-    return 'Build a simple graphql server';
-  },
-  blogTitle: () => {
-    return 'scotch.io';
-  }
-}
-
-const app = express()
-
-app.use('/',graphhqlHTTP({
+app.use('/', graphqlHTTP({
   schema: schema,
-  rootValue: root,
   graphiql: true
-}));
+}))
 
-
-app.listen(port,()=>{
-  console.log("GraphQL server running at "+port);
-});
+app.listen(port);
+console.log('GraphQL API server running at localhost:'+ port);
