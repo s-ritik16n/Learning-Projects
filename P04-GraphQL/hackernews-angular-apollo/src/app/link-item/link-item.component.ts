@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Link} from '../types';
+// import {Link} from '../types';
 
 @Component({
   selector: 'hn-link-item',
@@ -8,7 +8,7 @@ import {Link} from '../types';
 })
 export class LinkItemComponent implements OnInit {
   @Input()
-  link: Link;
+  link: Array<any>;
 
   constructor() {
   }
