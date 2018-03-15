@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <div id="display">
+
+  </div>
+  <button onclick="loadMore()">Load</button>
+</body>
+<script>
+  let limit = 2;
+
+  function loadMore() {
+    event.preventDefault();
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.open("POST", "/graphql");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.onload = function() {
+      let feed = xhr.response["data"]["feed"];
+      for (var i in feed) {
+        // console.log(feed[i]);
+        document.getElementById("display").innerHTML += feed[i]["id"] + "  :  " + feed[i]["title"] +"<br/>";
+      }
+    }
+    var query = `query Feed($limit: Int!) {
+      feed(limit: $limit){
+        id
+        title
+      }
+    }`;
+    xhr.send(JSON.stringify({
+      query: query,
+      variables: {limit: limit},
+    }));
+  }
+</script>
+
+</html>
